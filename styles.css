@@ -64,6 +64,16 @@ h1 {
     }
 }
 
+@media only screen and (max-height: 500px) {
+    #settings {
+        bottom: 20%;
+        font-size: 15px;
+    }
+    input {
+        font-size: 15px;
+    }
+}
+
 #settings {
     position: absolute;
     left: 30%;
