@@ -1,8 +1,15 @@
+if (document.URL.includes("index.html")) {
+
+
 document.addEventListener('DOMContentLoaded', () => {
     const category_btn = document.getElementById('category-btn');
     const categories = document.getElementById('categories');
     const number_input = document.getElementById('number');
     const minprobabilities_input = document.getElementById('lowest');
+
+   
+    console.log(document)
+
     let number;
     let minprobabilities;
     number_input.addEventListener('input', () => {
@@ -10,15 +17,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     minprobabilities_input.addEventListener('input', () => {
         checkvars(minprobabilities_input)
-    });
-
-   
+    }); 
+    
 
     category_btn.addEventListener('click', () => {
         number = declarevars(number, number_input);
         minprobabilities = declarevars(minprobabilities, minprobabilities_input);
-
-        let categorys = chooseCategorys(catergory_list, number);
+        let categorys = chooseCategorys(catergory_list, number, minprobabilities);
         categories.innerHTML = '';
         categorys.forEach(category => {
             let category_div = document.createElement('div');
@@ -29,13 +34,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
+});
 
-    function chooseCategorys (category_list, number) {
+} else if (document.URL.includes("play.html")) {
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const play_btn = document.getElementById('play-btn');
+        const play = document.getElementById('play');
+        const generated_category = document.getElementById('category');
+        const letter = document.getElementById('letter');
+
+        play_btn.addEventListener('click', () => {
+            let category = chooseCategoryPlay();
+            generated_category.innerText = category.name;
+            let randomletter = Math.floor(Math.random() * letter_list.length);
+            letter.innerText = letter_list[randomletter];
+
+        });
+    });
+
+}
+
+    function chooseCategoryPlay () {
+        console.log("choose category")
+        let random = Math.floor(Math.random() * catergory_list.length);
+        console.log(random)
+        let cat = catergory_list[random];
+        if (cat.probabilities == 0) {
+            console.log("no category")
+            chooseCategoryPlay();
+        } else {
+            console.log(cat.name)
+            return cat;
+        }
+    }
+
+
+    
+
+    function chooseCategorys (category_list, number, minprobabilities) {
         let categorys = [];
         let excluded = [];
         for (let i = 0; i < number; i++) {
             let random = Math.floor(Math.random() * category_list.length);
-            
             if (categorys.includes(category_list[random])) {
                 console.log("already in list")
                 i--;
@@ -58,6 +99,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     iNumber = true;
                     console.log(eightnumber, "eight")
                 }
+                console.log(excluded)
+                console.log(cat.id)
+                console.log(excluded.includes(cat.id))
+                console.log(probability > randomnumber)
+                console.log(minprobabilities)
 
                 if (probability > randomnumber && !excluded.includes(cat.id) && (probability >= minprobabilities || iNumber)) {
                     while (cat2.parent != null) {
@@ -164,6 +210,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         return variable;
     }
+
+    const letter_list = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]
+
 
     const catergory_list = 
         [
@@ -292,7 +341,7 @@ document.addEventListener('DOMContentLoaded', () => {
             {'name': 'Milchprodukt', 'id': '463', 'probabilities': '570' , 'parent': '46'},
             {'name': 'Käse', 'id': '4631', 'probabilities': '300' , 'parent': '463'},
             {'name': 'Joghurt', 'id': '4632', 'probabilities': '330' , 'parent': '463'},
-            {'name': 'Eis', 'id': '4633', 'probabilities': '360' , 'parent': '463'},
+            {'name': 'Eissorte', 'id': '4633', 'probabilities': '360' , 'parent': '463'},
             {'name': 'Medikament/Droge', 'id': '464', 'probabilities': '410' , 'parent': '46'},
             {'name': 'Medikament', 'id': '4641', 'probabilities': '290' , 'parent': '464'},
             {'name': 'Droge', 'id': '4642', 'probabilities': '310' , 'parent': '464'},
@@ -344,9 +393,9 @@ document.addEventListener('DOMContentLoaded', () => {
             {'name': 'Musik', 'id': '52', 'probabilities': '0' , 'parent': '5'},
             {'name': 'Song', 'id': '521', 'probabilities': '950' , 'parent': '52'},
             {'name': 'Rap', 'id': '5211', 'probabilities': '400' , 'parent': '521'},
-            {'name': 'Pop', 'id': '5212', 'probabilities': '430' , 'parent': '521'},
-            {'name': 'Rock', 'id': '5213', 'probabilities': '330' , 'parent': '521'},
-            {'name': 'Klassik', 'id': '5214', 'probabilities': '330' , 'parent': '521'},
+            {'name': 'Popsong', 'id': '5212', 'probabilities': '430' , 'parent': '521'},
+            {'name': 'Rocksong', 'id': '5213', 'probabilities': '330' , 'parent': '521'},
+            {'name': 'Klassische Musiksück', 'id': '5214', 'probabilities': '330' , 'parent': '521'},
             {'name': 'Kinderlied', 'id': '5215', 'probabilities': '440' , 'parent': '521'},
             {'name': 'Englisches Lied', 'id': '5216', 'probabilities': '440' , 'parent': '521'},
             {'name': 'Deutsches Lied', 'id': '5217', 'probabilities': '440' , 'parent': '521'},
@@ -490,4 +539,3 @@ document.addEventListener('DOMContentLoaded', () => {
             {'name': 'Typisch Australien', 'id': '778451', 'probabilities': '200' , 'parent': '77845'},
             {'name': 'Typisch Neuseeland', 'id': '778452', 'probabilities': '170' , 'parent': '77845'},
         ]
-});
