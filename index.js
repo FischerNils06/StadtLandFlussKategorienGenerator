@@ -369,6 +369,7 @@ document.addEventListener('DOMContentLoaded', () => {
             {'name': 'Roman', 'id': '5121', 'probabilities': '340' , 'parent': '512'},
             {'name': 'Kinderbuch', 'id': '5122', 'probabilities': '340' , 'parent': '512'},
             {'name': 'Comic', 'id': '5123', 'probabilities': '330' , 'parent': '512'},
+            {'name': 'Manga/Anime', 'id': '51231', 'probabilities': '330' , 'parent': '5123'},
             {'name': 'Sachbuch', 'id': '5124', 'probabilities': '340' , 'parent': '512'},
             {'name': 'Serie', 'id': '513', 'probabilities': '410' , 'parent': '51'},
             {'name': 'Etwas aus Film/Buch/Serie', 'id': '514', 'probabilities': '0' , 'parent': '51'},
